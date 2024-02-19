@@ -6,51 +6,130 @@
     <title>Discord Bot Hosting</title>
     <!-- Include necessary CSS/JS files for CodeMirror -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1, h2 {
+            color: #444;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        #console, #file-content {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        #file-input {
+            display: none;
+        }
+        #upload-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #upload-btn:hover {
+            background-color: #218838;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Discord Bot Hosting</h1>
-    <p>Here you can manage your Discord bots.</p>
-    
-    <!-- Console Section -->
-    <div>
-        <h2>Console</h2>
-        <div id="console">
-            <!-- Console output will be appended here -->
+    <div class="container">
+        <h1>Welcome to Discord Bot Hosting</h1>
+        <p>Here you can manage your Discord bots.</p>
+        
+        <!-- Console Section -->
+        <div class="section">
+            <h2>Console</h2>
+            <div id="console">
+                <!-- Console output will be appended here -->
+            </div>
+            <button class="button" onclick="startBot()">Start Bot</button>
+            <button class="button" onclick="stopBot()">Stop Bot</button>
         </div>
-        <button onclick="startBot()">Start Bot</button>
-        <button onclick="stopBot()">Stop Bot</button>
-    </div>
-    
-    <!-- File Upload Section -->
-    <div>
-        <h2>File Upload</h2>
-        <input type="file" id="file-input">
-        <button onclick="uploadFile()">Upload</button>
-    </div>
-    
-    <!-- File Editor Section -->
-    <div>
-        <h2>File Editor</h2>
-        <textarea id="file-content"></textarea>
-        <button onclick="saveFile()">Save</button>
+        
+        <!-- File Upload Section -->
+        <div class="section">
+            <h2>File Upload</h2>
+            <input type="file" id="file-input">
+            <label for="file-input" id="upload-btn">Upload</label>
+        </div>
+        
+        <!-- File Editor Section -->
+        <div class="section">
+            <h2>File Editor</h2>
+            <textarea id="file-content"></textarea>
+            <button class="button" onclick="saveFile()">Save</button>
+        </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("file-content"), {
             lineNumbers: true,
             mode: "python"
         });
-
         function startBot() {
-            // Send AJAX request to start the bot
+            fetch('/start-bot')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to start bot');
+                    }
+                    console.log('Bot started successfully');
+                    // Update UI or show success message
+                })
+                .catch(error => {
+                    console.error('Error starting bot:', error.message);
+                    // Handle error or show error message
+                });
         }
 
         function stopBot() {
-            // Send AJAX request to stop the bot
+            fetch('/stop-bot')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to stop bot');
+                    }
+                    console.log('Bot stopped successfully');
+                    // Update UI or show success message
+                })
+                .catch(error => {
+                    console.error('Error stopping bot:', error.message);
+                    // Handle error or show error message
+                });
         }
-
         function uploadFile() {
             var fileInput = document.getElementById("file-input");
             var file = fileInput.files[0];
