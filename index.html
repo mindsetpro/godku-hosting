@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Bot Hosting</title>
+    <!-- Include necessary CSS/JS files for CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.1/mode/python/python.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to Discord Bot Hosting</h1>
+    <p>Here you can manage your Discord bots.</p>
+    
+    <!-- Console Section -->
+    <div>
+        <h2>Console</h2>
+        <div id="console">
+            <!-- Console output will be appended here -->
+        </div>
+        <button onclick="startBot()">Start Bot</button>
+        <button onclick="stopBot()">Stop Bot</button>
+    </div>
+    
+    <!-- File Upload Section -->
+    <div>
+        <h2>File Upload</h2>
+        <input type="file" id="file-input">
+        <button onclick="uploadFile()">Upload</button>
+    </div>
+    
+    <!-- File Editor Section -->
+    <div>
+        <h2>File Editor</h2>
+        <textarea id="file-content"></textarea>
+        <button onclick="saveFile()">Save</button>
+    </div>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("file-content"), {
+            lineNumbers: true,
+            mode: "python"
+        });
+
+        function startBot() {
+            // Send AJAX request to start the bot
+        }
+
+        function stopBot() {
+            // Send AJAX request to stop the bot
+        }
+
+        function uploadFile() {
+            var fileInput = document.getElementById("file-input");
+            var file = fileInput.files[0];
+            if (file) {
+                // Send AJAX request to upload file
+            }
+        }
+
+        function saveFile() {
+            var content = editor.getValue();
+            // Send AJAX request to save file with content
+        }
+
+        // Load file content into editor
+        function loadFileContent(filePath) {
+            // Send AJAX request to fetch file content
+            // Once content is fetched, set it to editor
+        }
+    </script>
+</body>
+</html>
